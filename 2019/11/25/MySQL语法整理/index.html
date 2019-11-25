@@ -79,11 +79,14 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
+<meta name="description" content="emmm，我花了两天的时间把《MySQL必知必会》过了一遍，因为我记忆力比较差，看完就会忘，所以只能用这种笨方法把它大致写一下留点印象，我这个文章把基本的语法和例子都写了一下（当然表名列名会有乱起的情况…），可以当个查询手册来使用，就用Ctrl+F就好了，我读的pdf版可能不太正规用这种方法检索不到任何信息…在这个手册中，游标、触发器以及事务管理我没有记录，主要是太多了，我太懒了…就这样吧，以后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL语法整理">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;25&#x2F;MySQL%E8%AF%AD%E6%B3%95%E6%95%B4%E7%90%86&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="emmm，我花了两天的时间把《MySQL必知必会》过了一遍，因为我记忆力比较差，看完就会忘，所以只能用这种笨方法把它大致写一下留点印象，我这个文章把基本的语法和例子都写了一下（当然表名列名会有乱起的情况…），可以当个查询手册来使用，就用Ctrl+F就好了，我读的pdf版可能不太正规用这种方法检索不到任何信息…在这个手册中，游标、触发器以及事务管理我没有记录，主要是太多了，我太懒了…就这样吧，以后">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-25T02:16:16.046Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -114,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/25/MySQL语法整理/"/>
 
 
 
 
 
-  <title>Hexo</title>
+  <title>MySQL语法整理 | Hexo</title>
   
 
 
@@ -139,8 +142,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -213,9 +215,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -245,9 +247,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/25/MySQL%E8%AF%AD%E6%B3%95%E6%95%B4%E7%90%86/" itemprop="url">MySQL语法整理</a></h1>
+          <h1 class="post-title" itemprop="name headline">MySQL语法整理</h1>
         
 
         <div class="post-meta">
@@ -297,9 +297,7 @@
       
 
       
-        
-          
-            <blockquote>
+        <blockquote>
 <p>emmm，我花了两天的时间把《MySQL必知必会》过了一遍，因为我记忆力比较差，看完就会忘，所以只能用这种笨方法把它大致写一下留点印象，我这个文章把基本的语法和例子都写了一下（当然表名列名会有乱起的情况…），可以当个<strong>查询手册</strong>来使用，就用Ctrl+F就好了，我读的pdf版可能不太正规用这种方法检索不到任何信息…在这个手册中，游标、触发器以及事务管理我没有记录，主要是太多了，我太懒了…就这样吧，以后可能会补充进来。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">USE mysql;选择数据库  </span><br><span class="line">SHOW  databases;返回可用数据库的一个列表（可能有mysql内部使用的一个列表，如mysql和information_schema）  </span><br><span class="line">SHOW tables;获得一个数据库内的表的列表</span><br><span class="line">SHOW COLUMNS from customers;要求给出一个表名（from customers），它用来显示表列  </span><br><span class="line">SHOW COLUMNS=DESCRIBE</span><br><span class="line">SHOW GRANTS显示授予用户的安全权限</span><br><span class="line">```  </span><br><span class="line">## SELECT语句检索单个表列、多个表列以及所有表列</span><br><span class="line">SELECT prod_name FROM products 从products表中检索一个名为prod_name的列  </span><br><span class="line">SELECT prod_id,prod_name,prod_price FROM products检索多个列  </span><br><span class="line">SELECT * FROM products;通过通配符*检索所有的列  </span><br><span class="line">SELECT DISTINCT vend_id FROM products; DISTINCT独特的，通过该关键字返回不同值的行，**必须放在列名前面**，而且它适用于所有的列，不能作用于不同列  </span><br><span class="line">SELECT prod_name FROM products LIMIT 5; 返回不多于5行，LIMIT总是从第一行开始  </span><br><span class="line">SELECT prod_name FROM products LIMIT 5,5;指示mysql返回从行5开始的5行。第一个数为开始位置，第二个数为要检索的行数  </span><br><span class="line">行0 检索出来的第一行为行0而不是行1，因此，LIMIT 1,1检索出第二行而不是第一行  </span><br><span class="line">LIMIT 4 OFFSET 3  = LIMIT 3,4 从行3开始取4行  </span><br><span class="line">SELECT products.prod_name FROM crashcourse.rpoducts;使用完全限定的表名来引用列  </span><br><span class="line">## 排序检索数据（使用ORDER BY子句排序检索出来的数据）</span><br><span class="line">子句（clause)：SQL语句由子句构成，一个关键字+数据 如SELECT语句的FROM ...子句  </span><br><span class="line">---</span><br><span class="line">SELECT prod_name FROM products ORDER BY prod_name;ORDER BY子句指示prod_name列以字母顺序排序  </span><br><span class="line"></span><br><span class="line">SELECT prod_name,prod_price,prod_id FROM products ORDER BY prod_price,prod_name;先按价格排序，如果出现多个**行**价格相同的再按名称排序，**这是按多个列排序**  </span><br><span class="line"></span><br><span class="line">**指定排序方向** 默认升序，从A到Z，用ORDER BY从Z到A降序，指定DESC关键字(descend)  </span><br><span class="line"></span><br><span class="line">SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price DESC;  </span><br><span class="line"></span><br><span class="line">**DESC只应用到直接位于其前面的列名，对多个列进行升降序时必须对每个列指定DESC关键字**  </span><br><span class="line"></span><br><span class="line">SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price DESC,prod_name;先对产品降序排序，再对产品名排序（默认升序）  </span><br><span class="line"></span><br><span class="line">**ASC(ASCENDING)与DESC相反的关键字，但默认是ASC**  </span><br><span class="line">**在字典排序顺序中，A被视为与a相同**</span><br></pre></td></tr></table></figure>
@@ -494,8 +492,6 @@
 <h2 id="日期和时间数据类型"><a href="#日期和时间数据类型" class="headerlink" title="日期和时间数据类型"></a>日期和时间数据类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DATE 格式为YYYY-MM-DD</span><br><span class="line">DATETIME</span><br><span class="line">TIMESTAMP 功能与DATETIME相同，但范围小</span><br><span class="line">TIME 格式为HH:MM:SS</span><br><span class="line">YEAR 2位或4位数字表示</span><br></pre></td></tr></table></figure>
 
 <h2 id="二进制数据类型"><a href="#二进制数据类型" class="headerlink" title="二进制数据类型"></a>二进制数据类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BLOB</span><br><span class="line">MEDIUMBLOB</span><br><span class="line">LONGBLOB</span><br><span class="line">TINYBLOB</span><br></pre></td></tr></table></figure>
-          
-        
       
     </div>
     
@@ -512,204 +508,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/06/%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Kang Liu Rong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/06/%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" itemprop="url">完全背包问题求解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T19:54:17+08:00">
-                2019-11-06
-              </time>
+              <a href="/2019/11/06/%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" rel="next" title="完全背包问题求解">
+                <i class="fa fa-chevron-left"></i> 完全背包问题求解
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><pre><code>给定载重量为M的背包和n种物品，每种物品有一定的重量和价值，现在需要设计算法，在不超过背包载重量的前提下，巧妙选择物品，使得装入背包的物品的总价值最大化。规则是，每种物品均可装入背包多次或不装入（但不能仅装入物品的一部分）。请用数学语言对上述背包问题加以抽象，在此基础上给出动态规划求解该问题的递归公式，采用熟悉的程序设计语言实现“广义背包问题”的求解。在成果展示与课程报告中要求对所给公式中的符号意义加以详细说明，并简述算法的求解步骤</code></pre><h1 id="问题背景与分析"><a href="#问题背景与分析" class="headerlink" title="问题背景与分析"></a>问题背景与分析</h1><pre><code>广义（完全）背包问题是01背包问题的加强版。
-在01背包问题中我们对所给的物品的数量是有限制的，你也可以认为每件商品都是独一无二的，每一件物品最多只能选择一次，即在背包中该物品只有存在（1）与不存在（0）两种状态
-在广义背包问题中每种物品均可装入背包多次，它的含义就是每种商品可以是无限数量的。举个例子，在极端情况下，有个物品所占背包空间最少，而且它的价值最高。那么你可以用这一种物品把背包装满，当然，此情况下背包空间是可被物品所需空间整除的！</code></pre><h2 id="重点：每种物品有无数件"><a href="#重点：每种物品有无数件" class="headerlink" title="重点：每种物品有无数件"></a>重点：<strong>每种物品有无数件</strong></h2><h1 id="变量假设"><a href="#变量假设" class="headerlink" title="变量假设"></a>变量假设</h1><table>
-<thead>
-<tr>
-<th align="center">变量名</th>
-<th align="center">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">M</td>
-<td align="center">背包容量</td>
-</tr>
-<tr>
-<td align="center">N</td>
-<td align="center">物品种类</td>
-</tr>
-<tr>
-<td align="center">Si</td>
-<td align="center">第i种物品所需空间</td>
-</tr>
-<tr>
-<td align="center">Vi</td>
-<td align="center">第i种物品的价值</td>
-</tr>
-</tbody></table>
-<h1 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h1><p><strong>简化运算</strong></p>
-<ol>
-<li>去掉Si&gt;M的超容量物品</li>
-<li>由问题分析部分可得每种物品数量不限可重复装入，那么我们可以明白一点：若某物品（i）优于某部分物品（j，K，l…)，则可去除该部分物品。即Si&lt;=Sj且Vi&gt;Vj,则可去除j物品 </li>
-</ol>
-<h3 id="采用桶排序的方法筛选物品"><a href="#采用桶排序的方法筛选物品" class="headerlink" title="采用桶排序的方法筛选物品"></a>采用桶排序的方法筛选物品</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Java代码：</span><br><span class="line"></span><br><span class="line">public HashMap&lt;Integer,Integer&gt; DataCleaning(int[] goodsCa,int[] value,int capacity)&#123;</span><br><span class="line">    if(goodsCa.length !=value.length)&#123;</span><br><span class="line">        System.out.println(&quot;输入不匹配&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; result=new HashMap&lt;Integer,Integer&gt;();</span><br><span class="line">        //建桶</span><br><span class="line">        int[] count=new int[capacity+1];</span><br><span class="line">        //填充</span><br><span class="line">        for(int i=0;i&lt;goodsCa.length;i++)&#123;</span><br><span class="line">            if(goodsCa[i]&lt;=capacity)&#123;</span><br><span class="line">                count[goodsCa[i]]=count[goodsCa[i]]&gt;value[i]?count[goodsCa[i]]:value[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //筛选</span><br><span class="line">        int tmp=0;</span><br><span class="line">        for(int i=1;i&lt;capacity+1;i++)&#123;</span><br><span class="line">            if(count[i]==0)</span><br><span class="line">                continue;</span><br><span class="line">            else if(count[i]&gt;tmp)&#123;</span><br><span class="line">                tmp=count[i];</span><br><span class="line">                result.put(i,count[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">                count[i]=0;</span><br><span class="line">        &#125;</span><br><span class="line">        Set&lt;Integer&gt; set=result.KeySet();</span><br><span class="line">        for(Integer g:set)&#123;</span><br><span class="line">            System.out.println(g+&quot;,&quot;+result.get(g));</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h3 id="要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻"><a href="#要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻" class="headerlink" title="要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻"></a>要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻</h3><h3 id="通用数据寄存器组"><a href="#通用数据寄存器组" class="headerlink" title="通用数据寄存器组"></a><strong>通用数据寄存器组</strong></h3><p>四个16位：<br>AX（累加器<br>BX（基地址存储器<br>CX（计数器<br>DX（数据存储器</p>
-<p>八个8位:<br>AH/AL<br>BH/BL<br>CH/CL<br>DH/DL  </p>
-<h3 id="指示器和变址寄存器组"><a href="#指示器和变址寄存器组" class="headerlink" title="指示器和变址寄存器组"></a><strong>指示器和变址寄存器组</strong></h3><p>它们四个都是16位的</p>
-<p><strong>指示器</strong><br>所谓指示器，你可以把想象成链表的指针域，总是指向下一个结点的位置，总而言之，就是一个指示当前位置的标记</p>
-<ol>
-<li>SP（Stack Pointer）堆栈指示器<br>用于指示堆栈的栈顶位置和段落寄存器SS一起形成的堆栈的顶端，SP始终指向栈顶位置。<br>这里要说一下，<strong>堆栈是倒挂的生长的</strong>，比如说从10000H到100FFH的这个地址空间，SS=1000H（10000H），设SP=000FH（1000FH），每push一个字，SP先减2再填充字，比如push 1024H，此时SP=000DH（1000DH）。你看它是从高地址往低地址走的，这也是我为什么说它是倒挂的原因。<br>（段寄存器在下面会介绍一下，如果你不明白为什么会有段寄存器的话可以去查查，好吧，我在这里也写一写）<br>众所周知，8086的内外部数据总线均为16位，但它的地址总线却有20位，寻址范围为1M字节的存储空间。<br>而8086系统中存储器按字节编码，显然对应的地址为00000H-FFFFFH，但是你数据总线只有16位啊（64K的寻址能力），这怎么办？答案是拆分，比如把8FFFFH拆成80000H+FFFFH，80000H怎么表示？通过移位来解决，比如一个寄存器的值为8000H，然后用一个20位的加法器把8000H放到高16位，低四位全部赋值为0，这样80000H就出现了。这个存着8000H的寄存器就可以认为是段寄存器，所谓段就是把1M字节分成16段，每段达到数据线的最大寻址能力64K，你想想1M除以64K等于多少？段寄存器就是来表示要寻找的在哪段里!!!</li>
-<li>BP（Base Pointer）基址指示器<br>BP是用作堆栈的一个附加指针，与SS联用，确定堆栈中某一存储单元的物理地址。<br>与SP的区别是SP始终<strong>指向栈顶</strong>，BP可以指向栈的<strong>任意位子</strong>。</li>
-</ol>
-<p><strong>变址寄存器</strong>  </p>
-<ol>
-<li>SI（Source Index）源变址寄存器  </li>
-<li>DI（Destination Index）目标变址寄存器<br>变址变址，就是会自己动，这两个寄存器有自动增和自动减的功能，常与DS和ES段寄存器联用。SI表示源地址，DI表示目标地址<h3 id="FLAGS标志寄存器"><a href="#FLAGS标志寄存器" class="headerlink" title="FLAGS标志寄存器"></a><strong>FLAGS标志寄存器</strong></h3> OF/DF/IF/TF/SF/ZF/AF/PF/CF<h3 id="指令指针寄存器IP（Instruction-Pointer"><a href="#指令指针寄存器IP（Instruction-Pointer" class="headerlink" title="指令指针寄存器IP（Instruction Pointer)"></a><strong>指令指针寄存器IP（Instruction Pointer)</strong></h3> 为了取指令用的，IP内容为当前代码段内偏移量，你想想你写了许多行的代码，这一行行的代码其实就是一条条的汇编指令，你总要一条条执行吧，因此你必须要一条条的读取指令，当然有跳转的时候另说。<br> IP与CS一起形成要取出的指令操作码的存储单元的20位地址，每取一个字节IP自动加1</li>
-</ol>
-<h2 id="8086指令"><a href="#8086指令" class="headerlink" title="8086指令"></a>8086指令</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><pre><code>指示计算机进行某种操作的命令，简单说就是你写的代码要执行的操作</code></pre><h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><pre><code>操作码 [目的操作数],[源操作数]
-
-操作数一般分3类
-1. 立即数操作数
-只能用作源操作数，不能作为目的操作数
-2.寄存器操作数
-操作数存放在CPU的寄存器中（通用寄存器，专用寄存器，段寄存器，上面CPU图中的大都可以）
-3.存储器操作数
-存放在内存或外存里的数据</code></pre><h3 id="寻址方式（重头戏，反复看就能记住了）"><a href="#寻址方式（重头戏，反复看就能记住了）" class="headerlink" title="寻址方式（重头戏，反复看就能记住了）"></a>寻址方式（重头戏，反复看就能记住了）</h3><h3 id="总共7种"><a href="#总共7种" class="headerlink" title="总共7种!!!"></a>总共7种!!!</h3><pre><code>段寄存器
-
-CS（code segment）相应的偏移量由IP提供
-DS（data segment）
-ES（extra segment）指出当前程序使用的附加数据段的段基址
-SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.立即数寻址</span><br><span class="line">指令所用的8位或16位操作数作为指令的一部分</span><br><span class="line">例：</span><br><span class="line">MOV CL，64H</span><br><span class="line">就是将64H送入CL</span><br><span class="line">立即数只能是源操作数</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2.直接寻址（Direct Addressing）</span><br><span class="line">这是对存储器进行访问的最简单的方式，因为直接寻址直接给出了操作数的16位偏移地址</span><br><span class="line">直接寻址默认的段前缀为DS（数据段）</span><br><span class="line">例：</span><br><span class="line">MOV BX，[2040H]  将DS段的偏移地址为2040H和2041H的两字节单元的内容送给BX寄存器，设DS=2000H，就是地址为22040H和22041H的两单元的内容</span><br><span class="line"></span><br><span class="line">如果加了段前缀呢？</span><br><span class="line">MOV BX，ES:[2040H]</span><br><span class="line">那么就从ES段的2040H开始啦！ES*16+2040H</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">3.寄存器寻址</span><br><span class="line">操作数存放在CPU内部的寄存器中，不在存储器！</span><br><span class="line">16位的寄存器可以是</span><br><span class="line">AX/BX/CX/DX/SI/DI/SP/BP</span><br><span class="line">8位</span><br><span class="line">AH/AL/BH/BL/CH/CL/DH/DL</span><br><span class="line">如</span><br><span class="line">MOV DX，AX  把AX寄存器的内容给DX</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">4.寄存器间接寻址</span><br><span class="line">简单说就是把寄存器里存的数据当成存储器的偏移地址</span><br><span class="line">不过有效地址一般存在BX/BP和SI/DI寄存器里</span><br><span class="line">使用BX/SI/DI时的段前缀为DS</span><br><span class="line">使用BP为SS</span><br><span class="line">或者你可以指定段前缀</span><br><span class="line">例</span><br><span class="line">MOV AX.[BX] 设DS=2000H，BX=1000H，存储器21000H字单元内容为1111H，则AX的内容等于1111H</span><br><span class="line">MOV AX.[BP] 设SS=3000H，BP=1000H。。。</span><br><span class="line">MOV AX,ES:[BX]  设ES=4000H，BX=1000H。。。</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">5.寄存器相对寻址（Register Relative Addressing）</span><br><span class="line">操作数的有效地址是一个基址或变址寄存器的内容加上指定的8位或16位位移量</span><br><span class="line">人话：就是BX/BP/SI/DI的内容先加一个数，然后再作为存储器的偏移地址</span><br><span class="line">段前缀和上一个一样</span><br><span class="line">例</span><br><span class="line">MOV AX,COUNT[DI] (MOV AX,[DI+COUNT])</span><br><span class="line">设DI=1000H,COUNT=4000H,DS=3000H</span><br><span class="line">30000+1000+4000=35000H</span><br><span class="line">若35000h存的字位1990H，则AX=1990H</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">6.基址变址寻址</span><br><span class="line">有效地址是一个基址寄存器和一个变址寄存器的和</span><br><span class="line">人话：BX/BP   +   DI/SI</span><br><span class="line">例：</span><br><span class="line">MOV AX,[BX][DI] (MOV AX,[BX+DI])</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">7.相对基址变址寻址</span><br><span class="line">人话：就是BX/BP  +   DI/SI  + 一个普通的数</span><br><span class="line">例：</span><br><span class="line">MOV AX,[BX+SI+0080H]</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -719,456 +539,11 @@ SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/26/8086CPU%E7%9A%84%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Kang Liu Rong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/26/8086CPU%E7%9A%84%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/" itemprop="url">8086CPU的寻址方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-26T09:14:40+08:00">
-                2019-10-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>我之所以写这篇文章是因为我总是记不住它们的概念，什么相对寻址啊，变址寻址啊，乱七八糟的，总是看了忘忘了看，这里就不得不说我作为一个弱鸡的悲哀，上学期学过汇编，看过王爽老师的汇编书，然而还是菜的一匹，所以这次想把它们一网打尽–_–</p>
-<h1 id="话不多说了，我们直接来看看它到底是什么妖魔鬼怪"><a href="#话不多说了，我们直接来看看它到底是什么妖魔鬼怪" class="headerlink" title="话不多说了，我们直接来看看它到底是什么妖魔鬼怪"></a>话不多说了，我们直接来看看它到底是什么妖魔鬼怪</h1><h2 id="8086CPU"><a href="#8086CPU" class="headerlink" title="8086CPU"></a>8086CPU</h2><!-- ![8086CPU](images/8086CPU.png) -->
-<img src="/2019/10/26/8086CPU%E7%9A%84%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/8086CPU.png" class>
-
-<h3 id="要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻"><a href="#要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻" class="headerlink" title="要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻"></a>要搞懂它的寻址方式，我们必须要先了解它相关的寄存器的概念，嘻嘻</h3><h3 id="通用数据寄存器组"><a href="#通用数据寄存器组" class="headerlink" title="通用数据寄存器组"></a><strong>通用数据寄存器组</strong></h3><p>四个16位：<br>AX（累加器<br>BX（基地址存储器<br>CX（计数器<br>DX（数据存储器</p>
-<p>八个8位:<br>AH/AL<br>BH/BL<br>CH/CL<br>DH/DL  </p>
-<h3 id="指示器和变址寄存器组"><a href="#指示器和变址寄存器组" class="headerlink" title="指示器和变址寄存器组"></a><strong>指示器和变址寄存器组</strong></h3><p>它们四个都是16位的</p>
-<p><strong>指示器</strong><br>所谓指示器，你可以把想象成链表的指针域，总是指向下一个结点的位置，总而言之，就是一个指示当前位置的标记</p>
-<ol>
-<li>SP（Stack Pointer）堆栈指示器<br>用于指示堆栈的栈顶位置和段落寄存器SS一起形成的堆栈的顶端，SP始终指向栈顶位置。<br>这里要说一下，<strong>堆栈是倒挂的生长的</strong>，比如说从10000H到100FFH的这个地址空间，SS=1000H（10000H），设SP=000FH（1000FH），每push一个字，SP先减2再填充字，比如push 1024H，此时SP=000DH（1000DH）。你看它是从高地址往低地址走的，这也是我为什么说它是倒挂的原因。<br>（段寄存器在下面会介绍一下，如果你不明白为什么会有段寄存器的话可以去查查，好吧，我在这里也写一写）<br>众所周知，8086的内外部数据总线均为16位，但它的地址总线却有20位，寻址范围为1M字节的存储空间。<br>而8086系统中存储器按字节编码，显然对应的地址为00000H-FFFFFH，但是你数据总线只有16位啊（64K的寻址能力），这怎么办？答案是拆分，比如把8FFFFH拆成80000H+FFFFH，80000H怎么表示？通过移位来解决，比如一个寄存器的值为8000H，然后用一个20位的加法器把8000H放到高16位，低四位全部赋值为0，这样80000H就出现了。这个存着8000H的寄存器就可以认为是段寄存器，所谓段就是把1M字节分成16段，每段达到数据线的最大寻址能力64K，你想想1M除以64K等于多少？段寄存器就是来表示要寻找的在哪段里!!!</li>
-<li>BP（Base Pointer）基址指示器<br>BP是用作堆栈的一个附加指针，与SS联用，确定堆栈中某一存储单元的物理地址。<br>与SP的区别是SP始终<strong>指向栈顶</strong>，BP可以指向栈的<strong>任意位子</strong>。</li>
-</ol>
-<p><strong>变址寄存器</strong>  </p>
-<ol>
-<li>SI（Source Index）源变址寄存器  </li>
-<li>DI（Destination Index）目标变址寄存器<br>变址变址，就是会自己动，这两个寄存器有自动增和自动减的功能，常与DS和ES段寄存器联用。SI表示源地址，DI表示目标地址<h3 id="FLAGS标志寄存器"><a href="#FLAGS标志寄存器" class="headerlink" title="FLAGS标志寄存器"></a><strong>FLAGS标志寄存器</strong></h3> OF/DF/IF/TF/SF/ZF/AF/PF/CF<h3 id="指令指针寄存器IP（Instruction-Pointer"><a href="#指令指针寄存器IP（Instruction-Pointer" class="headerlink" title="指令指针寄存器IP（Instruction Pointer)"></a><strong>指令指针寄存器IP（Instruction Pointer)</strong></h3> 为了取指令用的，IP内容为当前代码段内偏移量，你想想你写了许多行的代码，这一行行的代码其实就是一条条的汇编指令，你总要一条条执行吧，因此你必须要一条条的读取指令，当然有跳转的时候另说。<br> IP与CS一起形成要取出的指令操作码的存储单元的20位地址，每取一个字节IP自动加1</li>
-</ol>
-<h2 id="8086指令"><a href="#8086指令" class="headerlink" title="8086指令"></a>8086指令</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><pre><code>指示计算机进行某种操作的命令，简单说就是你写的代码要执行的操作</code></pre><h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><pre><code>操作码 [目的操作数],[源操作数]
-
-操作数一般分3类
-1. 立即数操作数
-只能用作源操作数，不能作为目的操作数
-2.寄存器操作数
-操作数存放在CPU的寄存器中（通用寄存器，专用寄存器，段寄存器，上面CPU图中的大都可以）
-3.存储器操作数
-存放在内存或外存里的数据</code></pre><h3 id="寻址方式（重头戏，反复看就能记住了）"><a href="#寻址方式（重头戏，反复看就能记住了）" class="headerlink" title="寻址方式（重头戏，反复看就能记住了）"></a>寻址方式（重头戏，反复看就能记住了）</h3><h3 id="总共7种"><a href="#总共7种" class="headerlink" title="总共7种!!!"></a>总共7种!!!</h3><pre><code>段寄存器
-
-CS（code segment）相应的偏移量由IP提供
-DS（data segment）
-ES（extra segment）指出当前程序使用的附加数据段的段基址
-SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.立即数寻址</span><br><span class="line">指令所用的8位或16位操作数作为指令的一部分</span><br><span class="line">例：</span><br><span class="line">MOV CL，64H</span><br><span class="line">就是将64H送入CL</span><br><span class="line">立即数只能是源操作数</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2.直接寻址（Direct Addressing）</span><br><span class="line">这是对存储器进行访问的最简单的方式，因为直接寻址直接给出了操作数的16位偏移地址</span><br><span class="line">直接寻址默认的段前缀为DS（数据段）</span><br><span class="line">例：</span><br><span class="line">MOV BX，[2040H]  将DS段的偏移地址为2040H和2041H的两字节单元的内容送给BX寄存器，设DS=2000H，就是地址为22040H和22041H的两单元的内容</span><br><span class="line"></span><br><span class="line">如果加了段前缀呢？</span><br><span class="line">MOV BX，ES:[2040H]</span><br><span class="line">那么就从ES段的2040H开始啦！ES*16+2040H</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">3.寄存器寻址</span><br><span class="line">操作数存放在CPU内部的寄存器中，不在存储器！</span><br><span class="line">16位的寄存器可以是</span><br><span class="line">AX/BX/CX/DX/SI/DI/SP/BP</span><br><span class="line">8位</span><br><span class="line">AH/AL/BH/BL/CH/CL/DH/DL</span><br><span class="line">如</span><br><span class="line">MOV DX，AX  把AX寄存器的内容给DX</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">4.寄存器间接寻址</span><br><span class="line">简单说就是把寄存器里存的数据当成存储器的偏移地址</span><br><span class="line">不过有效地址一般存在BX/BP和SI/DI寄存器里</span><br><span class="line">使用BX/SI/DI时的段前缀为DS</span><br><span class="line">使用BP为SS</span><br><span class="line">或者你可以指定段前缀</span><br><span class="line">例</span><br><span class="line">MOV AX.[BX] 设DS=2000H，BX=1000H，存储器21000H字单元内容为1111H，则AX的内容等于1111H</span><br><span class="line">MOV AX.[BP] 设SS=3000H，BP=1000H。。。</span><br><span class="line">MOV AX,ES:[BX]  设ES=4000H，BX=1000H。。。</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">5.寄存器相对寻址（Register Relative Addressing）</span><br><span class="line">操作数的有效地址是一个基址或变址寄存器的内容加上指定的8位或16位位移量</span><br><span class="line">人话：就是BX/BP/SI/DI的内容先加一个数，然后再作为存储器的偏移地址</span><br><span class="line">段前缀和上一个一样</span><br><span class="line">例</span><br><span class="line">MOV AX,COUNT[DI] (MOV AX,[DI+COUNT])</span><br><span class="line">设DI=1000H,COUNT=4000H,DS=3000H</span><br><span class="line">30000+1000+4000=35000H</span><br><span class="line">若35000h存的字位1990H，则AX=1990H</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">6.基址变址寻址</span><br><span class="line">有效地址是一个基址寄存器和一个变址寄存器的和</span><br><span class="line">人话：BX/BP   +   DI/SI</span><br><span class="line">例：</span><br><span class="line">MOV AX,[BX][DI] (MOV AX,[BX+DI])</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">7.相对基址变址寻址</span><br><span class="line">人话：就是BX/BP  +   DI/SI  + 一个普通的数</span><br><span class="line">例：</span><br><span class="line">MOV AX,[BX+SI+0080H]</span><br></pre></td></tr></table></figure>
-
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/23/VscodeReDev/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Kang Liu Rong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/23/VscodeReDev/" itemprop="url">VscodeRemoteDevelopment</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-23T14:03:07+08:00">
-                2019-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="英语可以的话强烈建议直接去Vscode官网学习，我个人写的略浅薄"><a href="#英语可以的话强烈建议直接去Vscode官网学习，我个人写的略浅薄" class="headerlink" title="英语可以的话强烈建议直接去Vscode官网学习，我个人写的略浅薄"></a>英语可以的话强烈建议直接去<a href="https://code.visualstudio.com/docs/remote/remote-overview" target="_blank" rel="noopener">Vscode官网</a>学习，我个人写的略浅薄</h1><h2 id="购买云服务器"><a href="#购买云服务器" class="headerlink" title="购买云服务器"></a>购买云服务器</h2><p><a href="https://cloud.tencent.com/act/campus?fromSource=gwzcw.1296287.1296287.1296287" target="_blank" rel="noopener">腾讯云</a>  </p>
-<p><a href="https://promotion.aliyun.com/ntms/act/campus2018.html" target="_blank" rel="noopener">阿里云</a>  </p>
-<!-- ![阿里云服务器选择图](images/1.jpg)   -->
-<img src="/2019/10/23/VscodeReDev/1.jpg" class>
-
-<!-- <img src="/2019/10/23/VscodeReDev/1.jpg" class=""> -->
-<blockquote>
-<p>如上图所示</p>
-</blockquote>
-<p>选择系统镜像，系统选ubuntu，完成购买</p>
-<blockquote>
-<p>进入右上角控制台</p>
-</blockquote>
-<p>点击云服务器，可查看自己的设备<br>更改密码（可选），更改完成后重启服务器</p>
-<blockquote>
-<p>点击登陆（立即登录）</p>
-</blockquote>
-<p>默认名为ubuntu，是否更改（自选）<br>登陆完成，进入自己的服务器</p>
-<h2 id="SSH简介及使用"><a href="#SSH简介及使用" class="headerlink" title="SSH简介及使用"></a>SSH简介及使用</h2><blockquote>
-<p>SSH</p>
-</blockquote>
-<p>SSH(Security Shell) 是用来实现安全远程管理的一个协议，通过加密方式保障信息安全</p>
-<p>SSH工具分为客户端（本机）和服务端（云服务器）</p>
-<blockquote>
-<p>客户端</p>
-</blockquote>
-<p><strong>安装SSH Client</strong><br>Win10在桌面左下角输入powershell，选择管理员身份运行  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入  </span><br><span class="line">Get-WindowsCapability -Online | ? Name -like <span class="string">'OpenSSH'</span>  </span><br><span class="line">查看你是否拥有OpenSSH-Client Or Server  </span><br><span class="line">大概率State:NotPresent  </span><br><span class="line">在本机中只需要安装Client,在远程中安装Server  </span><br><span class="line"></span><br><span class="line">安装Client  </span><br><span class="line">Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0  </span><br><span class="line">安装成功会出现以下结果</span><br><span class="line">Path      :</span><br><span class="line">Online    :True</span><br><span class="line">RestartNeeded:False</span><br></pre></td></tr></table></figure>
-<p><strong>配置SSH公/私钥</strong><br>为什么要配置它？<br>一般SSH进行远程登陆是进行加密的，通过公钥私钥的配对来确保交流安全，确保与远程服务器连接的是本人<br>右下角打开cmd，输入cd …进入你的个人文件夹（也可以在桌面打开看看）  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">例如我的</span><br><span class="line">c:</span><br><span class="line"><span class="built_in">cd</span> /user/klr10</span><br><span class="line">进入里面会有个.ssh文件</span><br><span class="line">这就是你要存放公钥私钥的地方</span><br><span class="line">你可能会没有这个文件</span><br><span class="line">这时候你就要用git去创建一下了（可以网上搜一下这一步，我太懒了，写不动了）</span><br><span class="line"></span><br><span class="line">好了，我们来创建密钥（使用ssh-keygen命令-_-)跟我一步一步的</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">输入id_rsa</span><br><span class="line">然后设置密码，设置密码的时候啥都不显示，不要惊奇，它不会明文显示，ubuntu切换到root时要你输入密码时也是如此，这一步按两下回车，不要设密码也是可以的</span><br><span class="line"></span><br><span class="line">然后就好了，接着把你的id_rsa.pub文件拷到你的服务器中，这应该是公钥，当你进行远程连接时，它在服务器上与你进行配对，就是这个意思</span><br><span class="line">scp c:/user/klr10/.ssh/id_rsa.pub   你的用户名ubuntu@你的公网IP（在登陆选项那看）:/home/ubuntu/tmp.pub</span><br><span class="line">这句话就是拷贝了,你同时也在ubuntu上创建了tmp.pub这个档案，它存的就是公钥，路径我可能会打错，记不太清了，你看着增删就好了</span><br><span class="line"></span><br><span class="line">ssh 你的用户名ubuntu@你的公网IP <span class="string">"mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat ~/tmp.pub &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys &amp;&amp; rm -f ~/tmp.pub"</span></span><br><span class="line">这句话就是在ubuntu上创建个.ssh目录，创建个authorized_keys档案，把你刚弄的tmp.pub赋给它然后删除tmp.pub，这样做只是为了让文件层次更清晰</span><br><span class="line">linux命令自行百度谷歌</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.jianshu.com/p/fb56fa3c233b" target="_blank" rel="noopener">linux-mkdir</a></p>
-<blockquote>
-<p>服务端</p>
-</blockquote>
-<p>安装ssh服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ssh</span><br><span class="line">```  </span><br><span class="line">开启ssh服务</span><br><span class="line">``` bash</span><br><span class="line">$ sudo service ssh start</span><br></pre></td></tr></table></figure>
-<h2 id="Vscode远程连接"><a href="#Vscode远程连接" class="headerlink" title="Vscode远程连接"></a>Vscode远程连接</h2><p>打开Vscode，安装插件remote development,它是三合一的东西<br>在左侧工具栏会出现Remote-SSH的图标，点击它，出现connections,点击加下划线额东西可以开始配置了<br>Host kang<br>    HostName 你的公网IP<br>    User 你的主机名</p>
-<p>ctrl+s保存<br>开始享受连接，会出现一个新窗口，点击Open File你会发现linux文件可视化了，选择/home/ubuntu 点击OK，开始工作吧<br>点击菜单栏的Terminal的new Terminal可以打开命令行</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Kang Liu Rong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/23/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-23T08:37:00+08:00">
-                2019-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -1176,6 +551,10 @@ SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1196,8 +575,17 @@ SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1239,6 +627,22 @@ SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WHERE子句操作符"><span class="nav-number">1.</span> <span class="nav-text">WHERE子句操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用视图"><span class="nav-number">1.1.</span> <span class="nav-text">使用视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用存储过程"><span class="nav-number">1.2.</span> <span class="nav-text">使用存储过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全管理"><span class="nav-number">1.3.</span> <span class="nav-text">安全管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串数据类型"><span class="nav-number">1.4.</span> <span class="nav-text">串数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值数据类型"><span class="nav-number">1.5.</span> <span class="nav-text">数值数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日期和时间数据类型"><span class="nav-number">1.6.</span> <span class="nav-text">日期和时间数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制数据类型"><span class="nav-number">1.7.</span> <span class="nav-text">二进制数据类型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1379,6 +783,10 @@ SS（stack segment）</code></pre><figure class="highlight plain"><table><tr><td
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
